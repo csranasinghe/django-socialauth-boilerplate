@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load socialaccount static %}
+{% block title %}Login | Mr.Riyo{% endblock title %}
+{% block content_main %}
+<div class="container">
+    <div class="card card-container">
+
+        <h2 class="card-title">Login</h2>
+
+        <form method="POST" class="form-signin" action="{% url 'account_login'
+            %}">
+            {% csrf_token %}
+            <span id="reauth-email" class="reauth-email"></span>
+            <input type="text" id="inputEmail" name="login" class="form-control"
+                placeholder="Email" required autofocus>
+            <a class="button secondaryAction" href="{% url
+                'account_reset_password' %}">Forgot Password?</a>
+            <input type="password" id="inputPassword" name="password"
+                class="form-control" placeholder="Password"
+                required>
+            {% if redirect_field_value %}
+            <input type="hidden" name="{{ redirect_field_name }}" value="{{
+                redirect_field_value }}" />
+            {% endif %}
+            {% if form.errors %}
+            <hr>
+            <font color="red">Email or Password does not Match. Please try
+                again.</font>
+            <hr>
+            {% endif %}
+
+            <button class="btn btn-lg btn-primary btn-block btn-signin"
+                type="submit">Login</button>
+            <p class="text-center">Don't have an account yet?
+                <a href="{% url 'account_signup' %}">register</a></p>
+        </form>
+        <div class="text-center social-btn">
+            <a href="{% provider_login_url 'google' %}" class="btn btn-google
+                btn-block"><i class="fa fa-google"></i>
+                Sign in with <b>Google</b></a>
+            <a href="{% provider_login_url 'facebook' %}" class="btn
+                btn-facebook
+                btn-block"><i class="fa
+                    fa-facebook"></i> Sign in with <b>Facebook</b></a>
+        </div>
+    </div>
+</div>
+{% endblock content_main %}
